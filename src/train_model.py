@@ -1,7 +1,7 @@
 
 # src/train_model.py
 import os
-import joblib
+import pickle
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
 from src.prepare_data import load_data_from_s3, prepare_data
@@ -18,3 +18,7 @@ def train_and_save_model(bucket_name, file_key, output_path='models/fraud_model.
 
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     joblib.dump(model, output_path)
+
+    with open(output_path, 'wb') as f:
+        pickle.dump(model, f)
+
