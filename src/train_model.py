@@ -17,7 +17,6 @@ def train_and_save_model(bucket_name, file_key, output_path='models/fraud_model.
     print(classification_report(y_test, y_pred))
 
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    joblib.dump(model, output_path)
 
     with open(output_path, 'wb') as f:
         pickle.dump(model, f)
