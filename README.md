@@ -1,5 +1,5 @@
 # credit_trans_fraud_detect
-A fraud detection model to recognize fraudulent credit card transactions. It is deployed on AWS API Gateway, and is retrained on pushing the updated model on GitHub or whenever the training data is updated on AWS s3 followed with a new model push to GitHub.
+A fraud detection model to recognize fraudulent credit card transactions. It is deployed on AWS API Gateway, and is retrained on pushing the updated model on GitHub or whenever the training data is updated on AWS S3 followed with a new model push to GitHub.
 
 A full real-time fraud detection pipeline using:
 
@@ -69,7 +69,7 @@ credit_trans_fraud_detect/
 
 # Cloud setup (AWS)
 
-You first need to frok the repo to your personal GitHub account. This repo will does the CI/CD including training and retraining of the odel for you.
+You first need to fork the repo to your personal GitHub account. This repo will do the CI/CD including training and retraining of the odel for you.
 
 1. Create an AWS account (a free trail if you already don't have)
 
@@ -81,7 +81,7 @@ You first need to frok the repo to your personal GitHub account. This repo will 
 
 5. Go to your AWS IAM Console, under Access Keys click Create access key and choose Command Line Interface (CLI). Now create access key and save the key id and access key. Then, set the secrets of your cloned repository (Settings - Secrets and variables - Actions). Name them AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, and AWS_REGION (the region you choose for your S3 bucket or Lambda).
 
-6. Create a Lambda function (we named it credit-trans-fraud-detect-lambda-func). Now you need give it permission to access S3 (your bucket). Create a new role (through Roles) for the function and attach this json as its inline policy. You can name it whatever you want e.g., S3ReadAccess. 
+6. Create a Lambda function (for Architecture and Runtimes choose x86_64 and Python 3.10). I named it credit-trans-fraud-detect-lambda-func but you can use yours. Now you need to give it permission to access S3 (your bucket). Create a new role (through Roles) for the function and attach this json as its inline policy. You can name it whatever you want e.g., S3ReadAccess. 
 
 {
   "Version": "2012-10-17",
@@ -103,10 +103,10 @@ You first need to frok the repo to your personal GitHub account. This repo will 
     - Now we link the API to our Lambda function. Integration type is Lambda and Method is POST. Lets' call the Resource '/predict'.
     - Finally, you can deploy API that let's you to get a public URL (your real-time inference endpoint).
 
-9. Lambda Layer
-The trained model uses sklearn that includes Numpy, Scipy and joblib. Although the training process in done in GitHub run (not in Lambda), even with the trained model (uploaded to S3) the Lambda function will need those dependencies for inference. This is how we will required dependencies available for Lambda.
+10. Lambda Layer
+The trained model uses sklearn that includes Numpy, Scipy and joblib. Although the training process in done in GitHub run (not in Lambda), even with the trained model (uploaded to S3) the Lambda function will need those dependencies for inference. This is how we make required dependencies available for Lambda.
 
-- Make sure Docker is installed and is running on your system. Also make sure it is already adde to your system path. If not, run "export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
+- Make sure Docker is installed and is running on your system. Also make sure it is already added to your system path. If not, run "export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
 That is for mac, now run docker --version to see if it works, then re-run docker with "docker run ..."
 - In a terminal, go to the root of your package (e.g., credit_trand_fraud_detect)
 - run "mkdir -p sklearn_layer/python"
