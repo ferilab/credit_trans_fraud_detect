@@ -1,5 +1,4 @@
 
-# src/prepare_data.py
 import boto3
 import pandas as pd
 from io import StringIO

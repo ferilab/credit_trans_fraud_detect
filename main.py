@@ -1,5 +1,4 @@
 
-# main.py
 from src.train_model import train_and_save_model
 
 if __name__ == '__main__':

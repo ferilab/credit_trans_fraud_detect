@@ -1,4 +1,3 @@
-# .github/workflows/train_model.yml
 name: Train Fraud Detection Model
 
 on:

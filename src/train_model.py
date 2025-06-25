@@ -1,5 +1,4 @@
 
-# src/train_model.py
 import os
 import pickle
 from sklearn.ensemble import RandomForestClassifier
@@ -9,7 +8,8 @@ from src.prepare_data import load_data_from_s3, prepare_data
 def train_and_save_model(bucket_name, file_key, output_path='models/fraud_model.pkl'):
     df = load_data_from_s3(bucket_name, file_key)
     X_train, X_test, y_train, y_test = prepare_data(df)
-
+        # class_weight='balanced' gives more weight to the minority class during training, based 
+        # on class frequencies to avoid being biased toward class 0.
     model = RandomForestClassifier(n_estimators=100, random_state=42, class_weight='balanced')
     model.fit(X_train, y_train)
 
